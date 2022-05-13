@@ -1,4 +1,4 @@
-package go_serverless
+package main
 
 import (
 	"github.com/aws/aws-sdk-go/aws"
