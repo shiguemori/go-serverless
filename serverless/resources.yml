@@ -1,0 +1,21 @@
+Resources:
+  ServerlessTrabalhoBooks:
+    Type: 'AWS::DynamoDB::Table'
+    DeletionPolicy: Retain
+    Properties:
+      TableName: 'books'
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: title
+          AttributeType: S
+        - AttributeName: author
+          AttributeType: S
+      KeySchema:
+        - AttributeName: title
+          KeyType: HASH
+        - AttributeName: author
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST

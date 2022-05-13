@@ -1,0 +1,25 @@
+service: trabalho-serverless
+
+provider:
+  name: aws
+  runtime: go1.x
+  region: us-east-1
+  memorySize: 128
+  timeout: 30
+  logRetentionInDays: 180
+  logs:
+    restApi:
+      accessLogging: true #API Gateway | Access Logging
+  resourcePolicy:
+    - Effect: "Allow"
+      Principal: '*'
+      Action: execute-api:Invoke
+      Resource:
+        - execute-api:/*/GET/books
+package:
+  individually: true
+
+functions: ${file(serverless/functions.yml)}
+
+resources:
+  - ${file(serverless/resources.yml)}

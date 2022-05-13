@@ -1,0 +1,30 @@
+get-books:
+  handler: bin/get_books_handler
+  environment:
+    BOOKS_TABLE:
+      Ref: ServerlessTrabalhoBooks
+  package:
+    include:
+      - bin/get_books_handler
+    exclude:
+      - ./**
+  events:
+    - http:
+        path: /books
+        method: get
+  iamRoleStatements:
+    - Effect: "Allow" # xray permissions (required)
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+        - "sts:*"
+      Resource:
+        - "*"
+    - Effect: "Allow"
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - Fn::GetAtt:
+            - ServerlessTrabalhoBooks
+            - Arn
+  logRetentionInDays: 30
